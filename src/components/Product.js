@@ -1,9 +1,26 @@
-import React from 'react'
+import React,{useMemo} from 'react'
 import './Product.css'
 import ebook from '../assets/e_reactbook.jpg'
+import { useStateValue } from './Context/StateProvider'
 
 
-const Product = ({title,image,price,rating}) => {
+const Product = ({id,title,image,price,rating}) => {
+    const [{basket},dispatch] = useStateValue()
+    console.log(basket);
+    const addToBasket = () =>{
+            //dispatch the item
+            dispatch({
+                type:'ADD_TO_BASKET',
+                item:{
+                    id:id,
+                    title:title,
+                    image:image,
+                    price:price,
+                    rating:rating    
+                }    
+            })  
+    }
+
   return (
     <div className="product">
         <div className="product__info">
@@ -27,7 +44,7 @@ const Product = ({title,image,price,rating}) => {
         src={image}
         alt="React"
         />
-        <button>Add to Basket</button>
+        <button onClick={()=>addToBasket()}>Add to Basket</button>
     </div>
   )
 }
